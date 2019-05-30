@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-navbar hideBackButton="true">
+    <ion-title>
+      <img height="30" float float-left src="assets/icon/img.png"> NeuralPhone
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div padding text-center>
+    
+    <button *ngIf="!showContacts" ion-button round color="light" icon-right (click)="getContacts()">
+      List Contacts
+    </button>
+    <button *ngIf="!exportButton" ion-button round color="light" icon-right (click)="export()">
+      Start Contacts BackUp
+    </button>
+    <button *ngIf="!exportButton" ion-button round color="light" icon-right (click)="copy()">
+      Copy contacts to Phone
+    </button>
+    <button *ngIf="exportButton && !showContacts" ion-button round color="light" icon-right (click)="copyRemaining()">
+      Backup new Contacts
+    </button>
+  </div>
+  <div padding text-center *ngIf="exportCompleted">
+     All the contacts from your phone has been backed up successfully! 
+  </div>
+  <!--   
+  <button ion-button block color="neural" (click)="getContacts()" [disabled]="showContacts">getContacts</button>
+   *ngIf="hasContacts()" -->
+  <!-- <button ion-button (click)="hasContacts()">getContacts</button> -->
+
+  <!-- <button ion-button class="export" color="bleu" type="submit" (click)="export()" [disabled]="isContact">Group</button> -->
+  <!-- <button ion-button block color="neural" type="submit" (click)="export()" [disabled]="exportButton">Export
+    All</button>  -->
+  <!-- <ion-grid>
+    
+      <ion-row class="row" *ngFor="let contact of contactList">
+        <ion-col width-10>
+          <ion-checkbox dark>
+          </ion-checkbox>
+          {{contact.name}}
+          <p>{{contact.number}}</p>
+        </ion-col>
+      </ion-row>
+
+  </ion-grid> -->
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let contact of contactList">
+      <ion-item>
+        <button ion-button item-left color="primary" (click)='call(contact.number)'>
+          <ion-icon name="call" padding-right=".2px"></ion-icon> Call 
+        </button> <b> {{contact.name}}</b>
+        <p>{{contact.number}}</p> <button ion-button item-right color="primary" (click)='addContact(contact.number, contact.name)'>
+          <ion-icon name="download" padding-right=".2px"></ion-icon> Save  </button>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button round color="primary" icon-right (click)="call(contact.number)">Call <ion-icon name="call">
+          </ion-icon></button>
+      </ion-item-options>
+      <ion-item-options side="right">
+        <button ion-button round color="primary" icon-right (click)="addContact(contact.number, contact.name)"><ion-icon name="download"></ion-icon>Save</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+<!-- 
+  <ion-list>
+    <ion-item-sliding *ngFor="let contact of newCntList">
+      <ion-item>
+     <b> {{contact.name}}</b>
+        <p>{{contact.number}}</p> 
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list> -->
+
+
+  <!-- 
+  <button ion-button class="export" color="bleu" type="submit" (click)="export()" [disabled]="!isContact">Group</button>
+  <button ion-button class="export" color="bleu" type="submit" (click)="export()" [disabled]="!isToggled">Export
+    All</button> -->
+
+  <!-- <ion-item class="CGU" no-lines>
+      <ion-toggle color="secondary" [checked]="isToggled" (ionChange)="notify()"></ion-toggle>
+ </ion-item>  -->
+</ion-content>

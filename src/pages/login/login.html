@@ -1,0 +1,181 @@
+<ion-header>
+        <ion-navbar hideBackButton="true">
+          <ion-title>
+              <img height="30" float float-left src="assets/icon/img.png"> Neural Phone 
+          </ion-title>
+        </ion-navbar>
+      </ion-header>
+
+<ion-content padding>
+
+    <div id="logo" height="3000" padding text-center>
+        <img src="./assets/icon/img.png">
+    </div>
+
+    <div padding>
+
+        <ion-segment [(ngModel)]="opt" color="light">
+            <ion-segment-button value="signin">
+                Sign In
+            </ion-segment-button>
+            <!-- <ion-segment-button value="signup">
+                Sign Up
+            </ion-segment-button> -->
+            <ion-segment-button value="signup1">
+                Sign Up
+            </ion-segment-button>
+        </ion-segment>  
+    </div>
+
+    <div [ngSwitch]="opt">
+        <form (submit)="login()" *ngSwitchCase="'signin'" >
+
+            <ion-input type="email" placeholder="Enter your Email" [(ngModel)]="username" name="email"></ion-input>
+            <ion-input type="password" placeholder="Password" [(ngModel)]="password" name="password"></ion-input>
+
+            <ion-item no-lines *ngIf="showError">
+              <div no-lines class="error" *ngIf="showError">
+                UserName or password is not correct
+              </div>
+            </ion-item>
+            <div padding text-center>
+              <button ion-button round color="light" icon-right>
+                  Sign In <ion-icon name="log-in"></ion-icon>
+              </button>
+          </div>
+
+          <div padding text-center (click)="forgotPassword()" > Forgot Password???  Click here </div> 
+
+        </form>
+
+        <form novalidate (ngSubmit)="signup()" *ngSwitchCase="'signup1'" [formGroup]="signupform">
+            <ion-item no-lines>
+              <ion-input no-lines type="text" placeholder="Enter First Name" [(ngModel)]="firstname" formControlName="firstname" [class.error]="!signupform.controls.firstname.valid && signupform.controls.firstname.dirty"></ion-input>
+            </ion-item>
+            <ion-item no-lines *ngIf="( signupform.get('firstname').hasError('minlength') || signupform.get('firstname').hasError('maxlength') ||signupform.get('firstname').hasError('pattern') ||signupform.get('firstname').hasError('required') ) && signupform.get('firstname').touched">
+              <div no-lines class="error1" *ngIf="signupform.get('firstname').hasError('required') && signupform.get('firstname').touched">
+                First Name cannot be empty! 
+              </div>
+              <div no-lines class="error1" *ngIf="signupform.get('firstname').hasError('minlength') && signupform.get('firstname').touched">
+                Minimum 2 characters
+              </div>
+              <div no-lines class="error1" *ngIf="signupform.get('firstname').hasError('maxlength') && signupform.get('firstname').touched">
+                Maximum 20 characters
+              </div>
+              <div no-lines class="error1" *ngIf="signupform.get('firstname').hasError('pattern') && signupform.get('firstname').touched">
+                Only alphabets allowed
+              </div>
+            </ion-item>
+
+            <ion-item no-lines>
+              <ion-input type="text" placeholder="Enter Last Name" [(ngModel)]="lastname" formControlName="lastname" [class.error]="!signupform.controls.lastname.valid && signupform.controls.lastname.dirty"></ion-input>
+              </ion-item>
+              <ion-item no-lines *ngIf="( signupform.get('lastname').hasError('minlength') || signupform.get('lastname').hasError('maxlength') ||signupform.get('lastname').hasError('pattern') ||signupform.get('lastname').hasError('required') ) && signupform.get('lastname').touched">
+                <div class="error1" *ngIf="signupform.get('lastname').hasError('required') && signupform.get('lastname').touched">
+                  Last Name cannot be blank!
+                </div>
+                <div class="error1" *ngIf="signupform.get('lastname').hasError('minlength') && signupform.get('lastname').touched">
+                  Minimum 2 characters
+                </div>
+                <div class="error1" *ngIf="signupform.get('lastname').hasError('maxlength') && signupform.get('lastname').touched">
+                  Maximum 20 characters
+                </div>
+                <div class="error1" *ngIf="signupform.get('lastname').hasError('pattern') && signupform.get('lastname').touched">
+                  Only alphabets allowed
+                </div>
+              </ion-item>
+      
+            <ion-item no-lines>
+              <ion-input type="email" placeholder="Enter Email" [(ngModel)]="email" formControlName="email" [class.error]="!signupform.controls.email.valid && signupform.controls.email.dirty"></ion-input>
+            </ion-item>
+            <ion-item no-lines *ngIf="( signupform.get('email').hasError('minlength') || signupform.get('email').hasError('pattern') ||signupform.get('email').hasError('required') ) && signupform.get('email').touched">
+              <div class="error1" *ngIf="signupform.get('email').hasError('required') && signupform.get('email').touched">
+                Please enter your email
+              </div>
+              <div class="error1" *ngIf="signupform.get('email').hasError('pattern') && signupform.get('email').touched">
+                Email address is invalid !!
+              </div>
+            </ion-item>
+            <ion-item no-lines>
+              <ion-input type="text" placeholder="Enter PhoneNumber" [(ngModel)]="phone" formControlName="phone" [class.error]="!signupform.controls.phone.valid && signupform.controls.phone.dirty"></ion-input>
+            </ion-item>
+      
+            <ion-item no-lines *ngIf="( signupform.get('phone').hasError('minlength') || signupform.get('phone').hasError('maxlength') ||signupform.get('phone').hasError('pattern') ||signupform.get('phone').hasError('required') ) && signupform.get('phone').touched">
+              <div class="error1" *ngIf="signupform.get('phone').hasError('required') && signupform.get('phone').touched">
+                Please enter your Phone Number
+              </div>
+              <div class="error1" *ngIf="signupform.get('phone').hasError('minlength') && signupform.get('phone').touched">
+                Minimum 10 numbers
+              </div>
+      
+              <div class="error1" *ngIf="signupform.get('phone').hasError('pattern') && signupform.get('phone').touched">
+                No alphabets allowed! Only numbers
+              </div>
+            </ion-item>
+            
+            <ion-item no-lines>
+              <ion-input type="password" placeholder="Enter Password" [(ngModel)]="password1" formControlName="password1" [class.error]="!signupform.controls.password1.valid && signupform.controls.password1.dirty"></ion-input>
+            </ion-item>
+      
+            <ion-item no-lines *ngIf="( signupform.get('password1').hasError('minlength') || signupform.get('password1').hasError('maxlength') ||signupform.get('password1').hasError('required') ) && signupform.get('password1').touched">
+              <div class="error1" *ngIf="signupform.get('password1').hasError('required') && signupform.get('password1').touched">
+                Please enter your password
+              </div>
+              <div class="error1" *ngIf="signupform.get('password1').hasError('minlength') && signupform.get('password1').touched">
+                Minimum 6 characters
+              </div>
+              <div class="error1" *ngIf="signupform.get('password1').hasError('pattern') && signupform.get('password1').touched">
+                Password should contain atleast one upper case, one smaller case, one numeric and one special character. 
+              </div>
+            </ion-item>
+
+            <ion-item no-lines>
+              <ion-input type="password" placeholder="Confirm Password" [(ngModel)]="password2" formControlName="password2" [class.error]="!signupform.controls.password2.valid && signupform.controls.password2.dirty"></ion-input>
+            </ion-item>
+
+            <ion-item no-lines>
+
+            <div class="error1" *ngIf="signupform.value.password2 != '' && signupform.value.password1 !== signupform.value.password2">
+                Passwords don't match.
+            </div>
+
+            </ion-item>
+
+              <div padding text-center>
+              <button ion-button round color="light" icon-right [disabled]="!signupform.valid">Sign Up<ion-icon name="person-add"></ion-icon></button></div>
+ 
+          </form>
+
+
+        <!-- <form novalidate  (submit)="signup()" *ngSwitchCase="'signup'" [formGroup]="signupform">
+
+            <ion-label float>First Name</ion-label>
+            <ion-input type="text" placeholder="Enter your First Name" formControlName="firstname" [(ngModel)]="firstname"></ion-input>
+
+            <ion-label float>Last Name</ion-label>
+            <ion-input type="text" placeholder="Enter your Last Name" [(ngModel)]="lastname" name="lastname"></ion-input>
+
+            <ion-label float>Email</ion-label>
+            <ion-input type="email" placeholder="Enter your Email" [(ngModel)]="email" name="email" pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"></ion-input>
+
+            <ion-label float>Phone Number</ion-label>
+            <ion-input type="phonenumber" placeholder="Enter your PhoneNumber" [(ngModel)]="phone" name="phone"></ion-input>
+
+            <ion-label float>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="password1" name="password2"></ion-input>
+
+            <ion-label float>Re-Enter Password</ion-label>
+            <ion-input type="password" [(ngModel)]="password2" name="password2"></ion-input>
+
+            <div padding text-center>
+                <button ion-button round color="light" icon-right>
+                    Sign Up <ion-icon name="person-add"></ion-icon>
+                </button>
+            </div>
+
+            <div *ngIf="showError">Email ID / Phone Number already exists, Please login to continue </div>
+
+        </form> -->
+
+    </div>
+</ion-content>

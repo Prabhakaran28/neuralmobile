@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar hideBackButton="true">
+    <ion-title>
+      <img height="30" float float-left src="assets/icon/img.png"> Neural Phone Forgot Password
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div padding>
+
+  <form novalidate (submit)="sendPassword()" [formGroup]="forgotpassform">
+
+      <div padding text-center>
+          Please enter the registered Email. link to reset the password will be sent to the registered Email! 
+          
+        </div>
+
+    <ion-item no-lines>
+      <ion-input type="email" placeholder="Enter Email" [(ngModel)]="email" formControlName="email"
+        [class.error]="!forgotpassform.controls.email.valid && forgotpassform.controls.email.dirty"></ion-input>
+    </ion-item>
+    <ion-item no-lines
+      *ngIf="( forgotpassform.get('email').hasError('minlength') || forgotpassform.get('email').hasError('pattern') ||forgotpassform.get('email').hasError('required') ) && forgotpassform.get('email').touched">
+      <div class="error1" *ngIf="forgotpassform.get('email').hasError('pattern') && forgotpassform.get('email').touched">
+        Email address is invalid !!
+      </div>
+    </ion-item>
+
+    <ion-item no-lines>
+      <ion-input type="email" placeholder="Confirm Email" [(ngModel)]="email2" formControlName="email2"
+        [class.error]="!forgotpassform.controls.email2.valid && forgotpassform.controls.email2.dirty"></ion-input>
+    </ion-item>
+
+    <ion-item no-lines>
+
+      <div class="error1"
+        *ngIf="forgotpassform.value.password2 != '' && forgotpassform.value.password1 !== forgotpassform.value.password2">
+        Email Ids doesnt match
+      </div>
+
+    </ion-item>
+
+    <div padding text-center>
+        <button ion-button round color="light" icon-right [disabled]="!forgotpassform.valid">Send Email<ion-icon name="mail"></ion-icon></button></div>
+
+    <div padding text-center (click)="signin()" > Back to Sign In page </div> 
+
+  </form>
+
+</div>
+
+</ion-content>
